@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HW2 - Table + Button + Click + Popover</title>
+  <style>
+    :root {
+      --page-bg: #f0f0f0;
+      --title: #3a3a3a;
+      --line: #e5a21a;
+      --head-green: #05ad78;
+      --row-gray: #d8d8d8;
+      --border: #cfcfcf;
+      --text: #1f1f1f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      padding: 14px 20px 24px;
+    }
+
+    .top-line {
+      border-top: 4px dotted var(--line);
+      margin-bottom: 22px;
+    }
+
+    .hw-title {
+      margin: 0 0 18px;
+      font-size: clamp(34px, 5.2vw, 62px);
+      font-weight: 400;
+      color: var(--title);
+      letter-spacing: 0.01em;
+    }
+
+    .course-title {
+      margin: 0 0 22px;
+      font-size: clamp(40px, 5vw, 66px);
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      width: min(1240px, 100%);
+      overflow-x: auto;
+      background: #f7f7f7;
+    }
+
+    table {
+      width: 100%;
+      min-width: 930px;
+      border-collapse: collapse;
+      background: #f4f4f4;
+    }
+
+    th,
+    td {
+      border: 2px solid var(--border);
+      padding: 14px 10px;
+      font-size: clamp(22px, 2.6vw, 48px);
+      line-height: 1.2;
+      text-align: left;
+    }
+
+    th {
+      background: var(--head-green);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: var(--row-gray);
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f4f4f4;
+    }
+
+    tbody tr.selected {
+      outline: 4px solid #f4b000;
+      outline-offset: -4px;
+    }
+
+    .action-row {
+      position: relative;
+      margin-top: 8px;
+    }
+
+    #changeBtn {
+      min-width: 110px;
+      font-size: 44px;
+      line-height: 1;
+      padding: 6px 12px;
+      border: 2px solid #888;
+      border-radius: 4px;
+      background: #efefef;
+      cursor: pointer;
+    }
+
+    #changeBtn:hover {
+      background: #e5e5e5;
+    }
+
+    .popover {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 0;
+      width: min(520px, calc(100vw - 40px));
+      border: 2px solid #adadad;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 12px 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity 140ms ease, transform 140ms ease;
+      font-size: 22px;
+    }
+
+    .popover.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .popover strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 24px;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 12px;
+      }
+
+      #changeBtn {
+        font-size: 30px;
+      }
+
+      .popover {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="table-wrap">
+    <table aria-label="資工選課表">
+      <thead>
+        <tr>
+          <th>開課單位</th>
+          <th>課程名稱</th>
+          <th>授課教師</th>
+        </tr>
+      </thead>
+      <tbody id="courseTableBody">
+        <tr data-dept="資工系" data-course="物件導向軟體設計" data-teacher="李春良">
+          <td>資工系</td>
+          <td>物件導向軟體設計</td>
+          <td>李春良</td>
+        </tr>
+        <tr data-dept="資工系" data-course="計算機網路實驗" data-teacher="李春良">
+          <td>資工系</td>
+          <td>計算機網路實驗</td>
+          <td>李春良</td>
+        </tr>
+        <tr data-dept="資工系" data-course="作業系統實務" data-teacher="張哲維">
+          <td>資工系</td>
+          <td>作業系統實務</td>
+          <td>張哲維</td>
+        </tr>
+        <tr data-dept="資工系" data-course="生物統計" data-teacher="陳光武">
+          <td>資工系</td>
+          <td>生物統計</td>
+          <td>陳光武</td>
+        </tr>
+        <tr data-dept="資工系" data-course="通訊系統" data-teacher="陳仁暉">
+          <td>資工系</td>
+          <td>通訊系統</td>
+          <td>陳仁暉</td>
+        </tr>
+        <tr data-dept="資工系" data-course="軟硬體專題(2)" data-teacher="魏志達">
+          <td>資工系</td>
+          <td>軟硬體專題(2)</td>
+          <td>魏志達</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="action-row">
+      <button id="changeBtn" type="button">Change</button>
+      <div id="popover" class="popover" role="dialog" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script>
+    const rows = Array.from(document.querySelectorAll('#courseTableBody tr'));
+    const changeBtn = document.getElementById('changeBtn');
+    const popover = document.getElementById('popover');
+    let selectedRow = rows[0];
+
+    function selectRow(row) {
+      rows.forEach((item) => item.classList.remove('selected'));
+      row.classList.add('selected');
+      selectedRow = row;
+    }
+
+    function hidePopover() {
+      popover.classList.remove('show');
+      popover.setAttribute('aria-hidden', 'true');
+    }
+
+    function showPopover() {
+      const dept = selectedRow.dataset.dept;
+      const course = selectedRow.dataset.course;
+      const teacher = selectedRow.dataset.teacher;
+
+      popover.innerHTML = `
+        <strong>已選取課程</strong>
+        開課單位：${dept}<br>
+        課程名稱：${course}<br>
+        授課教師：${teacher}
+      `;
+
+      popover.classList.add('show');
+      popover.setAttribute('aria-hidden', 'false');
+    }
+
+    rows.forEach((row) => {
+      row.addEventListener('click', () => {
+        selectRow(row);
+      });
+    });
+
+    changeBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (popover.classList.contains('show')) {
+        hidePopover();
+      } else {
+        showPopover();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!popover.contains(event.target) && event.target !== changeBtn) {
+        hidePopover();
+      }
+    });
+
+    selectRow(selectedRow);
+  </script>
+</body>
+</html>
