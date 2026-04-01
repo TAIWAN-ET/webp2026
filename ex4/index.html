@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Pattern</title>
+    <style>
+        #output {
+            font-family: monospace;
+            font-size: 24px;
+            line-height: 1.25;
+        }
+    </style>
+</head>
+<body>
+    <pre id="output"></pre>
+
+    <script>
+        function tree(n) {
+            const lines = [];
+            printTreeTop(n, lines);
+            printTreeBottom(n, lines);
+            console.log('\n' + lines.join('\n'));
+
+            const output = document.getElementById('output');
+            output.textContent = lines.join('\n');
+        }
+
+        function printTreeTop(n, lines) {
+            for (let i = 0; i < n; i++) {
+                const spaces = repeatchar(n - i - 1, ' ');
+                const stars = repeatchar(2 * i + 1, '*');
+                lines.push(spaces + stars);
+            }
+        }
+
+        function printTreeBottom(n, lines) {
+            const trunkHeight = 3;
+            const spaces = repeatchar(n - 1, ' ');
+
+            for (let i = 0; i < trunkHeight; i++) {
+                lines.push(spaces + '*');
+            }
+        }
+
+        function repeatchar(n, arg_char) {
+            return arg_char.repeat(n);
+        }
+
+        tree(4);
+    </script>
+</body>
+</html>
