@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>網頁標題</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        } 
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        table {
+            margin-top: 16px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        th {
+            background: #f3f3f3;
+        }
+        p {
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>歡迎</h1>
+    <p>這個表格會由 <code>practice.js</code> 每秒新增一列資料。</p>
+
+    <table id="csie">
+        <tr>
+            <th>系所</th>
+            <th>課程名稱</th>
+            <th>教師</th>
+        </tr>
+    </table>
+
+    <script src="practice.js"></script>
+</body>
+</html>

@@ -33,13 +33,13 @@ window.addEventListener("keyup", function(e) {
             stringContent = stringContent.substring(1);
             firstChar = stringContent.length > 0 ? stringContent[0] : '';
             console.log('Matched! Removed first char. Remaining:', stringContent);
-        }
-        
-        // 生成 1-3 个新字符接在字符串后面
-        const newCharCount = 1 + Math.floor(Math.random() * 3); // 1-3
-        for (let i = 0; i < newCharCount; i++) {
-            const randomChar = String.fromCharCode(97 + Math.floor(Math.random() * 26)); // a-z
-            stringContent += randomChar;
+        } else {
+            // 没按到当前第一个字符时，才追加随机字符
+            const newCharCount = 1 + Math.floor(Math.random() * 3); // 1-3
+            for (let i = 0; i < newCharCount; i++) {
+                const randomChar = String.fromCharCode(97 + Math.floor(Math.random() * 26)); // a-z
+                stringContent += randomChar;
+            }
         }
         
         // 更新第一个字符
@@ -50,6 +50,6 @@ window.addEventListener("keyup", function(e) {
         }
         
         updateDisplay();
-        console.log('Added new chars. Total string:', stringContent, 'First char:', firstChar);
+        console.log('Updated string:', stringContent, 'First char:', firstChar);
     }
 });
