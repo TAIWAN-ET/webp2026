@@ -11,9 +11,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1 style={{ styleArgument: true }} onClick={changeText}>
-        {text}
-      </h1>
+      <button onClick={changeText}>{text}</button>
     </div>
   );
 }
