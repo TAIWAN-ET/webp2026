@@ -1,0 +1,52 @@
+.page {
+  min-height: 100vh;
+  padding: 24px;
+  background: radial-gradient(circle at top right, #ffffff 0%, #f3f5f7 45%, #e9edf2 100%);
+}
+
+.panel {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 10px 24px rgba(10, 45, 30, 0.08);
+  padding: 20px;
+}
+
+.title {
+  border-left: 6px solid #0fa968;
+  padding-left: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.toolbar {
+  margin-bottom: 12px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.table-wrap {
+  width: 100%;
+}
+
+.pager {
+  margin-top: 14px;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 12px;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+}
