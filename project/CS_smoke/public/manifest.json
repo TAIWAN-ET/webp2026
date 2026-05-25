@@ -1,0 +1,9 @@
+{
+  "short_name": "CS_smoke",
+  "name": "CS_smoke",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0f172a",
+  "background_color": "#f8fafc"
+}
